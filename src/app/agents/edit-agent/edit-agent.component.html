@@ -1,0 +1,15 @@
+<div class="agentDetail">
+    <div *ngIf="agent">
+        <h5>Edit agent:</h5>
+        <form [formGroup]="form" (ngSubmit)="save()">
+            <md-input-container>
+                <input mdInput formControlName="title" placeholder="Title">
+                <md-error>This field is required</md-error>
+            </md-input-container><br>
+            <md-input-container>
+                <textarea mdInput md-autosize minRows="6" placeholder="Your agent content..." formControlName="content"></textarea>
+            </md-input-container>
+            <button md-raised-button type="submit">Save</button>
+        </form>
+    </div>
+</div>
