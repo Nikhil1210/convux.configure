@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
 import {IAgent} from './agent.interface';
 import {GetAgentsQuery} from './graphql/queries';
+import {Observable} from 'rxjs/Rx';
 import {Subject} from 'rxjs/Subject';
 import {Apollo, ApolloQueryObservable} from 'apollo-angular';
 import {ApolloQueryResult} from 'apollo-client';
+import {Http, Response, RequestOptions} from '@angular/http';
 import {DeleteAgentInterface, UpdateAgentInterface, AgentsInterface} from './graphql/schema';
 import {RemoveAgentMutation, UpdateAgentMutation} from './graphql/mutations';
 
@@ -12,8 +14,24 @@ export class AgentsService {
   private agents : ApolloQueryObservable < AgentsInterface >;
   private apollo : Apollo;
 
-  constructor(apollo : Apollo) {
+  constructor(apollo : Apollo, private http : Http) {
     this.apollo = apollo;
+  }
+  gettext() : Observable < string > {
+    return this
+      .http
+      .get('/api/agents/helloagent')
+      .map((res : Response) => {
+        // alert('res: ' + res.json() + ' message: ' + res.json().message);
+        return res.json();
+      });
+  }
+
+  getAgents() : Observable < IAgent[] > {
+    return this
+      .http
+      .get('/api/agents')
+      .map((res : Response) => res.json());
   }
 
   get() : ApolloQueryObservable < AgentsInterface > {

@@ -12,10 +12,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/take';
 
 import {AgentsInterface} from '../graphql/schema';
+import {IAgent} from '../agent.interface';
 @Component({selector: 'agent-list', templateUrl: './agent-list.component.html', styleUrls: ['./agent-list.component.scss']})
 export class AgentListComponent implements OnInit {
   // Observable with GraphQL result
   public agents : ApolloQueryObservable < AgentsInterface >;
+  public agents2 : IAgent[];
+  public sampletext : string;
   public listAgentFilter : string;
   public agentControl = new FormControl();
   private nameFilter : Subject < string > = new Subject < string > ();
@@ -24,20 +27,24 @@ export class AgentListComponent implements OnInit {
   constructor(private _agentService : AgentsService, public snackBar : MdSnackBar) {}
 
   public ngOnInit() {
-    this.agents = this
-      ._agentService
-      .get();
-    // Add debounce time to wait 300 ms for a new change instead of keep hitting the
-    // server
+    console.log('calling getAgents service method');
     this
-      .agentControl
-      .valueChanges
-      .debounceTime(300)
-      .subscribe(name => {
-        this
-          .nameFilter
-          .next(name);
+      ._agentService
+      .getAgents()
+      .subscribe((data) => {
+        this.agents2 = data;
       });
+    this
+      ._agentService
+      .gettext()
+      .subscribe((data) => {
+        // alert(data);
+        this.sampletext = data.message;
+      });
+    // this.agents = this   ._agentService   .get(); // Add debounce time to wait
+    // 300 ms for a new change instead of keep hitting the // server this
+    // .agentControl   .valueChanges   .debounceTime(300)   .subscribe(name => {
+    // this       .nameFilter       .next(name);   });
   }
   public deleteAgent(id : string) {
     this

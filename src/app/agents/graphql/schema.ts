@@ -12,7 +12,6 @@ export interface DeleteAgentInterface {
     title: string | null
   }
 }
-
 export interface AgentsInterface {
   agents : Array < {
     title: string | null,

@@ -22,13 +22,14 @@ function update(params) {
         const tmp = agent;
         agent.title = params.data.title;
         agent.content = params.data.content;
-        return agent.save()
+        return agent.save();
     });
 }
 
-function list(params) {
-    const { limit = 50, skip = 0 } = params;
-    return Agent.list({ limit, skip })
+function list() {
+    return [{ agentId: 23, title: 'agent 23' }, { agentId: 44, title: 'agent 44' }, { agentId: 3, title: 'agent 3' }];
+    // const { limit = 50, skip = 0 } = params;
+    // return Agent.list({ limit, skip })
 }
 
 function remove(params) {

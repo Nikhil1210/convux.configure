@@ -5,12 +5,14 @@ import agentCtrl from '../controllers/agent.controller';
 
 const router = express.Router();
 
+router.get('/helloagent', function(req, res) {
+    res.json({ message: 'New hello from inside agent.route.js file' });
+})
 router.route('/')
     /** GET /api/agents - Get list of agents */
-    .get(agentCtrl.list)
-
-/** POST /api/agents - Create new agent */
-.post(validate(paramValidation.createAgent), agentCtrl.create);
+    .get((req, res) => res.json(agentCtrl.list()))
+    /** POST /api/agents - Create new agent */
+    .post((req, res) => res.json(agentCtrl.create(req)));
 
 router.route('/:agentId')
     /** GET /api/agent/:agentId - Get agent */

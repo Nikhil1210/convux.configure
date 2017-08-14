@@ -20,6 +20,7 @@ import innograph from 'innograph';
 import postCtrl from '../controllers/post.controller';
 import agentCtrl from '../controllers/agent.controller';
 
+import agentRoutes from '../routes/agent.route';
 
 const app = express();
 
@@ -53,11 +54,9 @@ if (config.env === 'development') {
     // }));
 }
 app.use(express.static(path.join(appRoot.path, 'dist')));
-
+// app.use('/api/agents', agentRoutes);
 app.use('/api', routes);
-
 innograph.init('/api/graphql', app, { post: postCtrl, agent: agentCtrl });
-// innograph.init('/api/graphql', app, { agent: agentCtrl });
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(appRoot.path, 'dist/index.html'));

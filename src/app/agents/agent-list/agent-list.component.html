@@ -1,3 +1,4 @@
+sample text - {{sampletext}}
 <div class="agents">
     <div aria-flowto="<left></left>">
         <h2>Agents list</h2>
@@ -7,7 +8,7 @@
         <br></div>
     <md-input-container>
         <input mdInput type="search" [(ngModel)]='listAgentFilter' [formControl]="agentControl" placeholder="search..."></md-input-container>
-    <md-card *ngFor="let agent of agents | async | agentsFilter:listAgentFilter">
+    <md-card *ngFor="let agent of agents2">
         <md-list>
             <md-list-item>
                 <a md-line [routerLink]="['/agents/agent-detail', agent.id]">
