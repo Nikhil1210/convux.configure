@@ -30,8 +30,9 @@ export class AgentListComponent implements OnInit {
     console.log('calling getAgents service method');
     this
       ._agentService
-      .getAgents()
+      .get()
       .subscribe((data) => {
+        console.log(data);
         this.agents2 = data;
       });
     this

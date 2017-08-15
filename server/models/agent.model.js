@@ -59,11 +59,11 @@ AgentSchema.statics = {
      * @param {number} limit - Limit number of agents to be returned.
      * @returns {Promise<Agent[]>}
      */
-    list({ skip = 0, limit = 50 } = {}) {
+    list() {
         return this.find()
-            .sort({ createdAt: -1 })
-            .skip(+skip)
-            .limit(+limit)
+            // .sort({ createdAt: -1 })
+            // .skip(+skip)
+            //.limit(40)
             .exec();
     }
 };
@@ -71,4 +71,4 @@ AgentSchema.statics = {
 /**
  * @typedef Agent
  */
-export default mongoose.model('Agent', AgentSchema);
+export default mongoose.model('Agent', AgentSchema, 'Agents');

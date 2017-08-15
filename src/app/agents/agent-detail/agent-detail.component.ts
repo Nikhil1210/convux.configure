@@ -14,6 +14,7 @@ import 'rxjs/add/operator/take';
 
 import {AgentByIdInterface} from '../graphql/schema';
 import {GetAgentDetailQuery} from '../graphql/queries';
+import {AgentsService} from "../agents.service";
 
 @Component({templateUrl: './agent-detail.component.html', styleUrls: ['./agent-detail.component.scss']})
 
@@ -28,8 +29,8 @@ OnDestroy {
   public nameFilter : Subject < string > = new Subject < string > ();
   private sub : Subscription;
   public id;
-  // Inject Angular2Apollo service
-  constructor(apollo : Apollo, private route : ActivatedRoute) {
+  // Inject Angular2Apollo service tslint:disable-next-line:max-line-length
+  constructor(private _agentService : AgentsService, apollo : Apollo, private route : ActivatedRoute) {
     this.apollo = apollo;
   }
 
@@ -40,14 +41,15 @@ OnDestroy {
       .subscribe(params => {
         this.id = params['id'];
       });
-    this.apollo.watchQuery < AgentByIdInterface > ({
-      query: GetAgentDetailQuery,
-      variables: {
-        "id": this.id
-      }
-    }).subscribe(({data}) => {
-      this.agent = data.agent;
-    });
+    this
+      ._agentService
+      .getDetails(this.id)
+      .subscribe((data) => {
+        this.agent = data;
+      });
+    // this.apollo.watchQuery < AgentByIdInterface > ({   query:
+    // GetAgentDetailQuery,   variables: {     "id": this.id   }
+    // }).subscribe(({data}) => {   this.agent = data.agent; });
   }
   ngOnDestroy() {
     this

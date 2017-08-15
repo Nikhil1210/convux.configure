@@ -11,7 +11,7 @@ sample text - {{sampletext}}
     <md-card *ngFor="let agent of agents2">
         <md-list>
             <md-list-item>
-                <a md-line [routerLink]="['/agents/agent-detail', agent.id]">
+                <a md-line [routerLink]="['/agents/agent-detail', agent._id]">
             {{
               agent.title
             }}
@@ -27,7 +27,7 @@ sample text - {{sampletext}}
             </button>
           </span>
                 <span>
-            <button md-button [routerLink]="['/agents/edit', agent.id]">
+            <button md-button [routerLink]="['/agents/edit', agent._id]">
               <md-icon>edit</md-icon>
             </button>
           </span>
