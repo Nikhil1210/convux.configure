@@ -10,6 +10,10 @@ function load(req, res, next, id) {
         .catch(e => next(e));
 }
 
+function loadAgent(params) {
+    return Agent.get(params.id);
+}
+
 function get(req, res) {
     return res.json(req.agent);
 }
@@ -23,30 +27,26 @@ function create(params) {
 }
 
 function update(req, res) {
-    req.agent.title = req.body.title;
-    req.agent.content = req.body.content;
-    return agent.save();
-    // return load(params).then(agent => {
-    //     const tmp = agent;
-    //     agent.title = params.title;
-    //     agent.content = params.content;
-    //     return agent.save();
-    // });
+    Agent.findByIdAndUpdate(req.params.agentId, req.body.data, function(err, result) {
+        if (err) return res.json(500, { error: err });
+        return res.json({ message: 'succesfully saved' });
+    });
 }
 
-function list() {
-    // return [{ agentId: 23, title: 'agent 23' }, { agentId: 44, title: 'agent 44' }, { agentId: 3, title: 'agent 3' }];
-    // const { limit = 50, skip = 0 } = {};
-    // return Agent.list({ limit, skip });
-    return Agent;
+function list(req, res) {
+    Agent.find().sort({ createdAt: -1 }).exec((err, result) => {
+        if (err) {
+            return res.send(500, { error: err });
+        }
+        return res.json(result);
+    });
 }
 
-function allAgents() {
-    return Agent.find().exec();
+function remove(req, res) {
+    Agent.findByIdAndRemove(req.params.agentId, function(err, result) {
+        if (err) return res.json(500, { error: err });
+        return res.json({ message: 'succesfully deleted' });
+    });
 }
 
-function remove(params) {
-    return load(params).then(agent => agent.remove());
-}
-
-export default { load, get, create, update, list, remove, allAgents };
+export default { load, get, create, update, list, remove };

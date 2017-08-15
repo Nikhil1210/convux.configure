@@ -17,22 +17,12 @@ export class AgentsService {
   constructor(apollo : Apollo, private http : Http) {
     this.apollo = apollo;
   }
-  gettext() : Observable < string > {
-    return this
-      .http
-      .get('/api/agents/helloagent')
-      .map((res : Response) => {
-        // alert('res: ' + res.json() + ' message: ' + res.json().message);
-        return res.json();
-      });
-  }
 
   get() : Observable < IAgent[] > {
     return this
       .http
       .get('/api/agents')
       .map((res : Response) => {
-        console.log('res: ' + res);
         return res.json();
       });
   }
@@ -41,16 +31,14 @@ export class AgentsService {
       .http
       .get(`/api/agents/${id}`)
       .map((res : Response) => {
-        console.log('details res.json(): ' + res.json());
         return res.json();
       });
   }
-  put(id : string, agent : IAgent) : Observable < IAgent > {
+  put(id : string, agent : IAgent) : Observable < string > {
     return this
       .http
-      .put(`/api/agents/${id}`, agent)
+      .put(`/api/agents/${id}`, {data: agent})
       .map((res : Response) => {
-        console.log('details res.json(): ' + res.json());
         return res.json();
       });
   }
@@ -61,20 +49,12 @@ export class AgentsService {
       .post('/api/agents', input)
       .map((res : Response) => res.json());
   }
-
-  // get() : ApolloQueryObservable < AgentsInterface > {   // Query agents data
-  // with observable variables   this.agents = this.apollo.watchQuery <
-  // AgentsInterface > ({query: GetAgentsQuery})   // Return only agents, not the
-  // whole ApolloQueryResult     .map(result => result.data.agents)as any; return
-  // this.agents; } delete(id : string) : Promise < any > {   // Call the mutation
-  // called deleteAgent   return new Promise((resolve, reject) => {
-  // this.apollo.mutate < DeleteAgentInterface > ({         mutation:
-  // RemoveAgentMutation,         variables: {           "id": id         } })
-  // .take(1)       .subscribe({         next: ({data}) => { console.log('delete
-  // agent', data.removeAgent);           // update data     resolve({success:
-  // true, message: `Agent #${id} deleted successfully `});         }, error:
-  // (errors) => {           console.log('there was an error sending the query',
-  // errors);           reject({success: false, message: errors}) }       }); });
-  // }
-
+  delete(id : string) : Observable < string > {
+    return this
+      .http
+      .delete(`/api/agents/${id}`)
+      .map((res : Response) => {
+        return res.json();
+      });
+  }
 }

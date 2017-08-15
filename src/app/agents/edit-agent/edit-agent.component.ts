@@ -66,17 +66,16 @@ export class EditAgentComponent {
       ._agentService
       .put(this.id, agent)
       .subscribe((data) => {
-        console.log('edit agent', data);
         this
           .router
           .navigate(['/agents']);
       }, console.error);
     // this   .apollo   .mutate({     mutation: UpdateAgentMutation,     variables:
     // {       "id": this.agent.id,       "data": {         "title":
-    // this.form.value.title,         "content": this.form.value.content       }
-    // }   })   .take(1)   .subscribe({     next: ({data}) => {
-    // console.log('edit agent', data);       // get edit data       this
-    // .router         .navigate(['/agents']);     },     error: (errors) => {
-    // console.log('there was an error sending the query', errors);     }   });
+    // this.form.value.title,         "content": this.form.value.content       } }
+    // })   .take(1)   .subscribe({     next: ({data}) => { console.log('edit
+    // agent', data);       // get edit data       this .router
+    // .navigate(['/agents']);     },     error: (errors) => { console.log('there
+    // was an error sending the query', errors);     }   });
   }
 }
